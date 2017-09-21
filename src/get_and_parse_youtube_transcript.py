@@ -13,7 +13,7 @@ xml_link = '%s%s' %(youtube_link, video_address)
 webpage = br.open(xml_link).read()
 soupPage = BeautifulSoup(webpage, "xml")
 soup = soupPage.find('transcript').findAll('text')
-text_list = [x.string.encode('ascii','ignore') for x in soup]
+text_list = [x.string.encode('ascii','ignore').replace("&#39;","'") for x in soup]
 print text_list
 strin_all = ""
 pyperclip.copy("\n".join(text_list))
