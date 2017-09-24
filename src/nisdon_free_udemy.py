@@ -26,14 +26,17 @@ def getFreeLinks(nisdon_query_link =
 
 free_link = getFreeLinks()
 def getUdemyLinks(class01):
-    print class01
+    # print class01
     br = mechanize.Browser(factory=mechanize.RobustFactory())
     br.set_handle_robots(False)
     webpage = br.open(class01).read()
     soupPage = BeautifulSoup(webpage, 'xml')
     udemy_links = soupPage.findAll("a", {"class":"button large visit"})[0]["href"].encode("ascii", "ignore")
-    print udemy_links
+    # print udemy_links
     return udemy_links
 
 udemy_links = map(getUdemyLinks, free_link)
 strip_links = map(lambda x: x[x.index('https', x.index('https')+1):], udemy_links)
+
+# filter and only return class with coupon code
+coupon_class = filter(lambda x: 'couponCode' in x, strip_links)
